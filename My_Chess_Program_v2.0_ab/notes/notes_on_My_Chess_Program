@@ -1,0 +1,11 @@
+
+Notes:
+~~~~~~
+
+  - This version (v2.0) contains one additional feature, which is ab-search. 
+    It also contains a way to measure how quicker the computation of variations is, when using ab-search, compared to using minmax-search.
+ 	Note that in previous versions we were using the method name "deep_search" instead of the method name "minmax_search".
+    
+   - Check (again): 
+     -> File "MyChessGame.java", near line 1162.
+  	 -> File "MyChessGame.java", the "check" function.    

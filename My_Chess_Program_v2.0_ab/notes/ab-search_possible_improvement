@@ -1,0 +1,164 @@
+	/**
+	 * This method performs an Alpha-Beta search to a fixed depth.
+	 * What 
+	 * @param color
+	 */
+	public double ab_search2(int color, int depth, double alpha, double beta, 
+								ArrayList<Integer> curr_path, ArrayList<Integer> best_path, ArrayList<Integer> possible_path)
+	{
+		//System.out.println(alpha + " " + beta);
+		ArrayList<Integer> possible = new ArrayList<Integer>();
+		// System.out.println(this.bestMoveInPosition[0]+""+this.bestMoveInPosition[1]+""+this.bestMoveInPosition[2]+""+this.bestMoveInPosition[3]);
+		double val = 0.0;
+		if (depth == 0) {
+			//System.out.println(curr_path);
+			return this.getMaterialHeuristicValue();
+		}
+		
+		Vector valids = this.findValidMovesInPosition(color);
+		Integer initialLine = (Integer)valids.elementAt(0);
+		Integer initialColumn = (Integer)valids.elementAt(1);
+		Integer finalLine;
+		Integer finalColumn;
+		
+		for (int i=2; i<valids.size(); i+=2) {		
+			Integer num = (Integer)valids.elementAt(i);
+			if (num.intValue() == -1 && i<valids.size()-1) {  // Don't do it if you are at the end of the Vector 
+				// Go to the next piece that can move...
+				i++;
+				initialLine = (Integer)valids.elementAt(i);
+				initialColumn = (Integer)valids.elementAt(i+1);
+				continue;
+			}
+			else if (i<valids.size()-1) {
+				/////////////////////////////////////////////////
+				MyChessGame clonedGame = this.cloneMyChessGame();
+				/////////////////////////////////////////////////
+				
+				finalLine = (Integer)valids.elementAt(i);
+				finalColumn = (Integer)valids.elementAt(i+1);
+				
+				clonedGame.executeMove(initialLine.intValue(), initialColumn.intValue(), finalLine.intValue(), finalColumn.intValue(), true);
+				curr_path.add(initialLine.intValue());
+				curr_path.add(initialColumn.intValue());
+				curr_path.add(finalLine.intValue());
+				curr_path.add(finalColumn.intValue());
+				
+				if (clonedGame.playerMoving==1) {
+					clonedGame.playerMoving = 2;
+				}
+				else {
+					clonedGame.playerMoving = 1;
+				}
+				
+				// MAX NODE! (WHITE HAS JUST PLAYED A MOVE)
+				if (playerMoving == 1) {
+					// If white mated his opponent...
+					if (clonedGame.isMated(2)) {
+						val = 1000000.0;
+					}
+					// If white stalemated black...
+					else if (clonedGame.isStalemate(2)) {
+						val = 0.0;
+					}
+					else {	// RECURSION !!!
+						/////////////////////////
+						val = clonedGame.ab_search(2, depth-1, alpha, beta, curr_path, best_path, possible_path);
+						/////////////////////////
+					}	
+					if (val >= beta) {
+						// Properly set the curr_path in this case...
+						for(int j=0; j<4 ;j++) {
+							curr_path.remove(curr_path.size()-1);
+						}
+						return beta;
+					} 
+					if (val > alpha) {
+						alpha = val;
+						// TO DO...(and also in black)
+						if (depth == 1) {
+							possible.clear();
+							for (int j=0; j<curr_path.size(); j++) {
+								possible.add(curr_path.get(j));
+							}
+						}
+					}
+					// Properly set the curr_path in all other cases...
+					for(int j=0; j<4 ;j++) {
+						curr_path.remove(curr_path.size()-1);
+					}
+				}
+				// MIN NODE! (BLACK JUST PLAYED A MOVE)
+				else if (playerMoving == 2) {
+					// If black mated his opponent...
+					if (clonedGame.isMated(1)) {
+						val = -1000000.0;
+					}
+					// If black stalemated white...
+					else if (clonedGame.isStalemate(1)) {
+						val = 0.0;
+					}
+					else { // RECURSION !!!
+						/////////////////////////
+						val = clonedGame.ab_search(1, depth-1, alpha, beta, curr_path, best_path, possible_path);
+						/////////////////////////
+					}	
+					if (val <= alpha) {
+						// Properly set the curr_path in this case...
+						for(int j=0; j<4; j++) {
+							curr_path.remove(curr_path.size()-1);
+						}
+						return alpha;
+					} 
+					if (val < beta) {
+						beta = val;
+						// TO DO...(and also in white)
+						if (depth == 1) {
+							possible.clear();
+							for (int j=0; j<curr_path.size(); j++) {
+								possible.add(curr_path.get(j));
+							}
+						}
+					}
+					// Properly set the curr_path in all other cases...
+					for(int j=0; j<4; j++) {
+						curr_path.remove(curr_path.size()-1);
+					}
+				}
+			}
+		} // end-for (all moves)
+		if (playerMoving == 1) {
+			if (depth==1) {
+				if (!possible.isEmpty()) {
+					best_path.clear();
+					for (int k=0; k<possible.size(); k++) {
+						best_path.add(possible.get(k));
+					}
+					System.out.println("BP is: " + best_path);
+				}
+			}
+			else {
+				//System.out.println("BP is: " + best_path);
+			}
+			return alpha;
+		}
+		else {
+			if (depth==1) {
+				if (!possible.isEmpty()) {
+					best_path.clear();
+					for (int k=0; k<possible.size(); k++) {
+						best_path.add(possible.get(k));
+					}
+//					if (this.ab_best_path != null) {
+//						System.out.println("AT LEAST ONCE");
+//						System.exit(0);
+//					}
+					System.out.println("BP is: " + best_path);
+				}
+			}
+			else {
+				//System.out.println("BP is: " + best_path);
+			}
+			return beta;
+		}	
+	}

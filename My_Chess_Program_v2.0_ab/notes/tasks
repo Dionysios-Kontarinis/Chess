@@ -1,0 +1,45 @@
+
+
+Things left to do:
+~~~~~~~~~~~~~~~~~~
+
+	1)	Properly handle all promotions (made either by the computer or the user).
+			
+	2)	Implement a GUI using Swing.
+	
+
+	
+Possible improvements:
+~~~~~~~~~~~~~~~~~~~~~~
+
+	1)	PERFORMANCE:
+		Change the data types used to represent the valid moves in a position.
+		Better use a Vector of Integers rather than a Vector of Arrays of Integers.
+		
+	2)	Change the findValidMoves function in order to return all the valid moves
+		(including castling and en-passant moves).
+		
+	3)	Improve the AI function by making the computer "cut" some branches of the tree
+		when analysing variations.
+		
+	4) 	Make further improvements on the AI:
+	
+		eg. a)	The computer could "remember" some of its "findings" and use them 
+				when analysing its next move.
+		
+		eg. b)	The computer could analyse some variations during the opponents turn.
+		
+		eg. c)	Insert the element of "time" in the computer's AI. 
+				Make it play the best move he has analysed so far if there is no more time left.
+				
+	5)	Better error handling in some cases (eg. the game should not end abruptly when
+	 	a wrong-formatted move is entered by the user).
+				
+				
+				
+				
+				
+				
+				
+				
+				
