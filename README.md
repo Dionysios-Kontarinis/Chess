@@ -6,7 +6,7 @@ Chess
 * AB-pruning is implemented, in order to speed-up searching.
 * The engine analyzes to a fixed-depth (variable "DEPTH_OF_SEARCH" in "MyChessGame.java") which can be edited.
 
-The java classes in the "tests" package can be used in order to:
+The classes in the "tests" package can be used in order to:
 
 1. Play a chess game against the engine, by using a console-based, simple GUI (PlayGame.java).
 2. Evaluate a position which must be hard-coded as "input" (Test_Positions_X.java).
