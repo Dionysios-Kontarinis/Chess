@@ -11,4 +11,4 @@ Chess has been considered for many years a **"standard" A.I. application**. Our 
 The classes in the *tests* package can be used in order to:
 
 1. **Play against the A.I. engine** by using a text-based interface (*PlayGame.java*).
-2. **Evaluate a position** which must be hard-coded as *input* (*Test_Positions_X.java*).
+2. **Evaluate a position** which must be hard-coded as *input* (*Test_Positions_X.java*). 
